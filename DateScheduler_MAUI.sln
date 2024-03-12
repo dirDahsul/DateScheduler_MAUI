@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateScheduler_MAUI", "DateScheduler_MAUI.csproj", "{D56888FC-2160-4B1D-A81A-CAA14D5EAE0F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D56888FC-2160-4B1D-A81A-CAA14D5EAE0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D56888FC-2160-4B1D-A81A-CAA14D5EAE0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D56888FC-2160-4B1D-A81A-CAA14D5EAE0F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D56888FC-2160-4B1D-A81A-CAA14D5EAE0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D56888FC-2160-4B1D-A81A-CAA14D5EAE0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D56888FC-2160-4B1D-A81A-CAA14D5EAE0F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {07EEAB01-D909-4B1C-BB26-A438F17BBCC8}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:waveview="clr-namespace:DateScheduler_MAUI.CustomContentView"
+             xmlns:alohakit="clr-namespace:AlohaKit.Animations;assembly=AlohaKit.Animations"
+             xmlns:viewmodel="clr-namespace:DateScheduler_MAUI.ViewModel"
+             x:DataType="viewmodel:LoginPageViewModel"
+             x:Class="DateScheduler_MAUI.View.LoginPage"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <alohakit:ShakeAnimation
+            x:Key="ShakePasswordAnimation"
+            Target="{x:Reference PasswordField}"
+            Duration="200">
+        </alohakit:ShakeAnimation>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <waveview:WaveView Parameter1="480" Parameter2="50" Grid.Row="0"/>
+            <!--<Image Grid.Row="0" Source="rocket.gif" IsAnimationPlaying="True"
+                HorizontalOptions="Center" VerticalOptions="Center"
+                HeightRequest="400" WidthRequest="400" Aspect="AspectFit"/>-->
+            <VerticalStackLayout Padding="35,60,35,20" Spacing="50" Grid.Row="0">
+                <!--<StackLayout.Background>
+             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                 <GradientStop Color="#dec2fd" Offset="0"/>
+                 <GradientStop Color="#92c5fc" Offset="1"/>
+             </LinearGradientBrush>
+         </StackLayout.Background>-->
+
+                <Label Text="Login" HorizontalOptions="Center"
+                       TextColor="White" FontSize="32" FontAttributes="Bold"/>
+
+                <VerticalStackLayout Spacing="20">
+                    <!-- Username Entry with Icon -->
+                    <Border Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 25,25,25,25"
+                            Background="Transparent" Padding="40,5,30,5">
+
+                        <Grid ColumnSpacing="20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Column="0" Source="user_icon.png" Aspect="AspectFit" Opacity="0.5"/>
+                            <Entry Grid.Column="1" Placeholder="Username" MaxLength="25"
+                                   Text="{Binding Username}">
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior EventName="TextChanged"
+                                                                    Command="{Binding EntryUsernameChanged}"
+                                                                    CommandParameter="{Binding Source={x:RelativeSource AncestorType={x:Type Entry}}, Path=Text}">
+                                    </toolkit:EventToCommandBehavior>
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Column="2" Source="tick.png" Aspect="AspectFit"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Password Entry with Icon -->
+                    <Border Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 25,25,25,25"
+                            Background="Transparent" Padding="40,5,30,5" x:Name="PasswordField">
+                        
+                        <Grid ColumnSpacing="20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Column="0" Source="password_icon.png" Aspect="AspectFit" Opacity="0.5"/>
+                            <Entry Grid.Column="1" Placeholder="Password" IsPassword="True"
+                                   MaxLength="25" Text="{Binding Password}">
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior EventName="TextChanged"
+                                                                    Command="{Binding EntryPasswordChanged}"
+                                                                    CommandParameter="{Binding Source={x:RelativeSource AncestorType={x:Type Entry}}, Path=Text}">
+                                        <!--Command="{Binding .}" binds to currently binded item .. if collectionview is binded to calendardate, . bind to calendar date-->
+                                    </toolkit:EventToCommandBehavior>
+                                </Entry.Behaviors>
+                                <!--<Entry.Triggers>
+                             <DataTrigger TargetType="Entry" Binding="{Binding IncorrectPassword}" Value="True">
+                                 <Setter Property="Text" Value="5"/>
+                             </DataTrigger>
+                         </Entry.Triggers>-->
+                            </Entry>
+                            <Label Grid.Column="1" TextColor="Red" Text="Incorrect" HorizontalOptions="End"
+                                   VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+                                   FontSize="12">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IncorrectPassword}" Value="True">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IncorrectPassword}" Value="False">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Image Grid.Column="2" Aspect="AspectFit">
+                                <Image.Triggers>
+                                    <DataTrigger TargetType="Image" Binding="{Binding IncorrectPassword}" Value="True">
+                                        <Setter Property="Source" Value="ex.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Image" Binding="{Binding IncorrectPassword}" Value="False">
+                                        <Setter Property="Source" Value="tick.png"/>
+                                    </DataTrigger>
+                                </Image.Triggers>
+                            </Image>
+                        </Grid>
+                    </Border>
+
+                    <!-- Remember Me Switch -->
+                    <HorizontalStackLayout>
+                        <Label Text="Remember Me" FontSize="15" TextColor="White"/>
+                        <Switch HorizontalOptions="EndAndExpand" OnColor="White">
+                            <Switch.Behaviors>
+                                <toolkit:EventToCommandBehavior
+                                    EventName="Toggled" Command="{Binding RememberSwitchToggled}"
+                                    CommandParameter="{Binding Source={x:RelativeSource AncestorType={x:Type Switch}}, Path=IsToggled}">
+                                </toolkit:EventToCommandBehavior>
+                            </Switch.Behaviors>
+                            <Switch.Triggers>
+                                <Trigger TargetType="Switch" Property="IsToggled" Value="True">
+                                    <Setter Property="ThumbColor" Value="#78cb85" />
+                                </Trigger>
+                                <Trigger TargetType="Switch" Property="IsToggled" Value="False">
+                                    <Setter Property="ThumbColor" Value="White" />
+                                </Trigger>
+                            </Switch.Triggers>
+                        </Switch>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- Login Button -->
+                <Button Text="LOGIN" TextColor="White" FontAttributes="Bold" FontSize="16"
+                        BackgroundColor="#6b74cf" CornerRadius="25" Command="{Binding LogIn}">
+                    
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IncorrectPassword}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <alohakit:BeginAnimation Animation="{StaticResource ShakePasswordAnimation}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Image IsAnimationPlaying="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                       Source="loading.gif" Aspect="AspectFit" Margin="0,-20,0,0"
+                       HeightRequest="100" WidthRequest="100"/>
+
+                <Label VerticalOptions="EndAndExpand" HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Don't have account? " />
+                            <Span Text="Sign up" TextColor="#5170c0" FontAttributes="Bold">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SignUp}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </VerticalStackLayout>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

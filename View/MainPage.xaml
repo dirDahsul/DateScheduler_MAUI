@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:DateScheduler_MAUI.Model"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:alohakit="clr-namespace:AlohaKit.Animations;assembly=AlohaKit.Animations"
+             xmlns:viewmodel="clr-namespace:DateScheduler_MAUI.ViewModel"
+             x:DataType="viewmodel:MainPageViewModel"
+             x:Class="DateScheduler_MAUI.View.MainPage"
+             Title="{Binding Title}">
+
+    <ContentPage.Content>
+        <Grid>
+            <AbsoluteLayout Grid.Row="0">
+                <!-- Box 1 -->
+                <BoxView Color="White" CornerRadius="0, 45, 45, 0"
+                         AbsoluteLayout.LayoutBounds="0, 0, 0.7, 0.43"
+                         AbsoluteLayout.LayoutFlags="SizeProportional, PositionProportional"/>
+
+                <!-- Box 2 -->
+                <BoxView Color="White"
+                         AbsoluteLayout.LayoutBounds="1, 0, 0.3, 0.12"
+                         AbsoluteLayout.LayoutFlags="SizeProportional, PositionProportional"/>
+
+                <!-- Box 3 -->
+                <BoxView Color="#439ae1" CornerRadius="0, 0, 45, 0"
+                         AbsoluteLayout.LayoutBounds="1, 0, 0.3, 0.12"
+                         AbsoluteLayout.LayoutFlags="SizeProportional, PositionProportional"/>
+
+                <!-- Box 4 -->
+                <BoxView Color="White" CornerRadius="0, 45, 0, 0"
+                         AbsoluteLayout.LayoutBounds="1, 1, 0.5, 0.88"
+                         AbsoluteLayout.LayoutFlags="SizeProportional, PositionProportional"/>
+
+                <!-- Box 5 -->
+                <BoxView Color="#439ae1" CornerRadius="0, 45, 0, 0"
+                         AbsoluteLayout.LayoutBounds="1, 1, 1, 0.57"
+                         AbsoluteLayout.LayoutFlags="SizeProportional, PositionProportional"/>
+            </AbsoluteLayout>
+
+            <Grid Grid.Row="0" Padding="25, 25, 25, 0" RowSpacing="60">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <VerticalStackLayout Grid.Row="0" Spacing="15">
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout Spacing="25">
+                            <Label TextColor="Black" FontSize="14" HorizontalOptions="Start"
+                                   VerticalOptions="End" FontAttributes="Bold">
+                                <Label.Text>
+                                    <Binding StringFormat="{}Hello, {0}" Path="Username"/>
+                                </Label.Text>
+                            </Label>
+                            <ImageButton Source="logo.png" CornerRadius="360" Aspect="AspectFit"
+                                         HorizontalOptions="End" HeightRequest="50" WidthRequest="50"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="15">
+                            <ImageButton Source="bell.png" Aspect="AspectFit" BackgroundColor="Transparent"
+                                         HorizontalOptions="Start" HeightRequest="35" WidthRequest="35"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="10">
+                        <HorizontalStackLayout>
+                            <Label Text="My Task" TextColor="Black"
+                                   HorizontalOptions="StartAndExpand" VerticalOptions="Center"
+                                   FontAttributes="Bold" FontSize="36"/>
+                            <ImageButton Source="add.png" Aspect="AspectFit"
+                                         BackgroundColor="#439ae1" CornerRadius="15"
+                                         HorizontalOptions="End" HeightRequest="60" WidthRequest="60">
+                                <ImageButton.Shadow>
+                                    <Shadow Brush="Black"
+                                            Radius="15">
+                                    </Shadow>
+                                </ImageButton.Shadow>
+                            </ImageButton>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout>
+                            <Label Text="Today" TextColor="Black"
+                                   HorizontalOptions="StartAndExpand"
+                                   FontAttributes="Bold" FontSize="22"/>
+
+                            <Label Text="{Binding StartingItem.Date, StringFormat='{0:ddd, d, MMMM}'}"
+                                   TextColor="#153454" FontSize="14"
+                                   HorizontalOptions="End" VerticalOptions="Start"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <CollectionView ItemsSource="{Binding HC.Collection}"
+                                    HeightRequest="70" Margin="0,0,-25,0"
+                                    SelectionMode="Single"
+                                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                    SelectionChangedCommand="{Binding DateChanged}"
+                                    SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
+                        <!--<x:Array Type="{x:Type model:CalendarDate}">
+
+                        </x:Array> -->
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal"/>
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:ICalendarDate">
+                                <Border Stroke="#439ae1" StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 15,15,15,15"
+                                        WidthRequest="70">
+
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Background"
+                                                            Value="White"/>
+                                                    <Setter TargetName="DateLabel"
+                                                            Property="Label.TextColor"
+                                                            Value="Black"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+
+                                            <VisualState x:Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Background"
+                                                            Value="#439ae1"/>
+                                                    <Setter TargetName="DateLabel"
+                                                            Property="Label.TextColor"
+                                                            Value="White"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+
+                                    <Label x:Name="DateLabel" TextColor="Black"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Date, StringFormat='{0: dd}'}"
+                                                      FontSize="28" FontAttributes="Bold"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="{Binding Date, StringFormat='{0:ddd}'}"
+                                                      FontSize="16"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <CollectionView Grid.Row="1" VerticalScrollBarVisibility="Always"
+                                ItemsSource="{Binding TasksFromSelectedDate}"
+                                SelectionMode="Multiple"
+                                SelectionChangedCommand="{Binding TaskChanged}"
+                                SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItems}"
+                                Margin="20,0,0,0">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="30" Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:IDailyTask">
+                            <Border StrokeShape="RoundRectangle 15,15,15,15" Padding="20, 10, 15, 20"
+                                    HeightRequest="110" Background="White" Stroke="#439ae1"
+                                    StrokeThickness="0">
+
+                                <!-- When item selected => border thicker, check box displayed -->
+                                <!-- Need to implement the image/checkbox ... gotta text what is best -->
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="StrokeThickness"
+                                                        Value="0"/>
+                                                <Setter TargetName="CheckBox"
+                                                        Property="Image.IsVisible"
+                                                        Value="False"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                        <VisualState x:Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="StrokeThickness"
+                                                        Value="3"/>
+                                                <Setter TargetName="CheckBox"
+                                                        Property="Image.IsVisible"
+                                                        Value="True"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
+                                <VerticalStackLayout Spacing="5">
+                                    <BoxView HeightRequest="5" WidthRequest="5"
+                                             CornerRadius="5" HorizontalOptions="End">
+                                        <BoxView.Triggers>
+                                            <DataTrigger TargetType="BoxView"
+                                                         Binding="{Binding Priority}"
+                                                         Value="High">
+                                                <Setter Property="BackgroundColor" Value="Red"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="BoxView"
+                                                         Binding="{Binding Priority}"
+                                                         Value="Medium">
+                                                <Setter Property="BackgroundColor" Value="Yellow"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="BoxView"
+                                                         Binding="{Binding Priority}"
+                                                         Value="Low">
+                                                <Setter Property="BackgroundColor" Value="Green"/>
+                                            </DataTrigger>
+                                        </BoxView.Triggers>
+                                    </BoxView>
+                                    
+                                    <Label Text="{Binding Name}" TextColor="Black"
+                                           HorizontalOptions="Start"
+                                           FontSize="18"/>
+                                    <ScrollView VerticalScrollBarVisibility="Never">
+                                        <Label Text="{Binding Description}" TextColor="#439ae1"
+                                               HorizontalOptions="Start"
+                                               HorizontalTextAlignment="Start"
+                                               FontSize="12"/>
+                                    </ScrollView>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

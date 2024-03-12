@@ -1,0 +1,14 @@
+﻿global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using DateScheduler_MAUI.CustomContentView;
+global using DateScheduler_MAUI.Model;
+global using DateScheduler_MAUI.ViewModel;
+global using DateScheduler_MAUI.Service;
+global using System.Collections.ObjectModel;
+global using System.ComponentModel;
+global using System.Diagnostics;
+global using System.Runtime.CompilerServices;
+global using System.Text.Json;
+global using System.Text;
+global using System.Text.Json.Serialization;
+global using System.Net.Http.Headers;
